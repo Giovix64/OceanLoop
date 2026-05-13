@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Nostre Attività | OceanLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #11caa0;
+            --primary-hover: #0ea5e9;
+            --secondary: #00334e;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --primary: #2dd4bf;
+            --primary-hover: #38bdf8;
+            --secondary: #1e293b;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .logo img { height: 40px; cursor: pointer; transition: transform 0.3s; }
+        .logo img:hover { transform: scale(1.05); }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; transition: var(--transition); }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+
+        .btn-nav { background-color: var(--primary); color: white !important; padding: 8px 20px; border-radius: 20px; }
+        .btn-nav:hover { background-color: var(--primary-hover); color: white !important; }
+
+        .menu-toggle { display: none; font-size: 1.8rem; color: var(--text-main); cursor: pointer; background: none; border: none; }
+
+        /* --- THEME TOGGLE --- */
+        #theme-toggle {
+            position: fixed; bottom: 30px; right: 30px;
+            background-color: var(--primary); color: #fff; border: none;
+            width: 55px; height: 55px; border-radius: 50%; font-size: 1.5rem;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000;
+            transition: var(--transition); display: flex; align-items: center; justify-content: center;
+        }
+        #theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+
+        /* --- HEADER --- */
+        header {
+            padding: 8rem 5% 4rem 5%;
+            text-align: center;
+            background: linear-gradient(180deg, var(--secondary) 0%, var(--bg-color) 100%);
+            color: white;
+            margin-top: 60px;
+        }
+
+        header h1 { font-size: 3.5rem; color: var(--text-main); margin-bottom: 1rem; }
+        header h1 span { color: var(--primary); }
+        header p { color: var(--text-muted); max-width: 800px; margin: 0 auto; font-size: 1.2rem; }
+
+        /* --- DOCUMENT SECTION --- */
+        .docs-container {
+            max-width: 1200px;
+            margin: 0 auto 5rem auto;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .doc-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-top: 6px solid var(--primary);
+        }
+
+        .doc-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-header i {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .doc-header h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .doc-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Iframe Styles */
+        .iframe-wrapper {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+            background-color: #f1f5f9;
+        }
+
+        [data-theme="dark"] .iframe-wrapper {
+            border-color: #334155;
+            background-color: #0f172a;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            padding: 12px 25px;
+            background-color: var(--secondary);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .btn-download:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* --- FOOTER --- */
+        footer { background-color: var(--secondary); color: #fff; text-align: center; padding: 3rem 5%; }
+        footer img { height: 40px; margin-bottom: 1rem; filter: brightness(0) invert(1); }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute; top: 70px; left: 0; width: 100%;
+                background-color: var(--nav-bg); flex-direction: column; align-items: center;
+                padding: 2rem 0; box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            }
+            .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .btn-nav { margin-top: 10px; }
+            .iframe-wrapper { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="OceanLoop Logo"></a>
+        </div>
+        <button class="menu-toggle" id="mobile-menu" aria-label="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#presentazione">La Storia</a></li>
+            <li><a href="attività.html" style="color: var(--primary);">Le Attività</a></li>
+            <li><a href="shop.html">Shop Prodotti</a></li>
+            <li><a href="organigramma.html" class="btn-nav">Il nostro Team</a></li>
+        </ul>
+    </nav>
+
+    <button id="theme-toggle" aria-label="Cambia Tema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <header>
+        <h1>La nascita delle nostre <span>Attività</span></h1>
+        <p>Dietro ogni prodotto OceanLoop c'è una rigorosa pianificazione aziendale. Esplora la documentazione tecnica e le tempistiche di progetto.</p>
+    </header>
+
+    <section class="docs-container">
+        
+        <div class="doc-card">
+            <div class="doc-header">
+                <i class="fa-solid fa-file-pdf"></i>
+                <div>
+                    <h2>Documento di Progetto</h2>
+                    <p>Business Plan e Schede Attività dettagliate.</p>
+                </div>
+            </div>
+            
+            <div class="iframe-wrapper">
+                <iframe src="piano.pdf" title="Documento PDF OceanLoop">
+                    <p>Il tuo browser non supporta gli iframe. <a href="documento.pdf">Scarica il PDF qui.</a></p>
+                </iframe>
+            </div>
+            <a href="documento.pdf" class="btn-download" download><i class="fa-solid fa-download"></i> Scarica PDF</a>
+        </div>
+
+        <div class="doc-card" style="border-top-color: #0f9d58;"> <div class="doc-header">
+                <i class="fa-solid fa-file-excel" style="color: #0f9d58;"></i>
+                <div>
+                    <h2>Pianificazione PERT / CPM</h2>
+                    <p>Analisi dei tempi, risorse e Diagramma di Gantt.</p>
+                </div>
+            </div>
+            
+            <div class="iframe-wrapper">
+                <iframe src="https://docs.google.com/spreadsheets/d/1QWsFryNcChEp2kt4FpbnUumvGgclUHkVe4CiNJT_ICQ/edit?usp=sharing" title="Foglio Google OceanLoop"></iframe>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/TUO_LINK_FOGLIO/edit" target="_blank" class="btn-download" style="background-color: #0f9d58;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Apri in Fogli Google
+            </a>
+        </div>
+
+    </section>
+
+    <footer>
+        <img src="logo.png" alt="OceanLoop Logo">
+        <p>&copy; 2026 OceanLoop - Moda Rigenerata. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            if(navMenu.classList.contains('active')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>

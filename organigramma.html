@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organigramma | OceanLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #11caa0;
+            --primary-hover: #0ea5e9;
+            --secondary: #00334e;
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --primary: #2dd4bf;
+            --primary-hover: #38bdf8;
+            --secondary: #1e293b;
+            --card-bg: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* Pulsante Dark Mode Fluttuante */
+        #theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        header {
+            padding: 4rem 5%;
+            text-align: center;
+            background: linear-gradient(180deg, var(--secondary) 0%, var(--bg-color) 100%);
+            color: white;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .header-content h1 span {
+            color: var(--primary);
+        }
+
+        .header-logo {
+            max-width: 180px;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -2rem auto 5rem auto;
+            padding: 0 5%;
+        }
+
+        /* --- VISUAL CHART SECTION --- */
+        .org-chart-wrapper {
+            margin: 4rem auto;
+            text-align: center;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .org-chart-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        /* --- ORGANIGRAMMA LAYOUT --- */
+        .org-section {
+            margin-bottom: 4rem;
+        }
+
+        .org-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .org-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Card Styles */
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .role-card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-top: 6px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(17, 202, 160, 0.15);
+        }
+
+        .role-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .role-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-card .role-title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .role-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Top Level Special Styling */
+        .top-level {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .top-level .role-card {
+            max-width: 450px;
+            border-top: 8px solid var(--secondary);
+        }
+
+        .top-level .role-card i {
+            color: var(--secondary);
+        }
+
+        footer {
+            background-color: var(--secondary);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer img {
+            height: 40px;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+    </style>
+</head>
+<body>
+
+    <button id="theme-toggle" aria-label="Cambia Tema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <header>
+        <div class="header-content">
+            <h1>L'Anima di <span>OceanLoop</span></h1>
+            <img src="logo.png" alt="Logo OceanLoop" class="header-logo">
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Dietro ogni passo rigenerato c'è un team di professionisti dedicato alla visione di un futuro senza sprechi.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="org-chart-wrapper">
+            <h2 class="org-title" style="margin-bottom: 1.5rem;">Struttura Gerarchica</h2>
+            <img src="organigramma.jpeg" alt="Schema Organigramma OceanLoop">
+        </div>
+        
+        <div class="org-section top-level">
+            <div class="role-card">
+                <i class="fa-solid fa-crown"></i>
+                <div class="role-title">Direzione Strategica</div>
+                <h3>CEO</h3>
+                <p>Responsabile della visione globale, dei rapporti con gli investitori green e della guida strategica del progetto.</p>
+            </div>
+        </div>
+
+        <div class="org-section">
+            <h2 class="org-title">Area Tecnica & Produzione</h2>
+            <div class="org-grid">
+                <div class="role-card">
+                    <i class="fa-solid fa-gears"></i>
+                    <div class="role-title">Operations</div>
+                    <h3>Resp. Catena di Produzione</h3>
+                    <p>Supervisiona il funzionamento dei macchinari e l'efficienza dei cicli produttivi delle calzature.</p>
+                </div>
+                <div class="role-card">
+                    <i class="fa-solid fa-flask-vial"></i>
+                    <div class="role-title">R&D</div>
+                    <h3>Responsabile R&S</h3>
+                    <p>Sviluppa e testa il filato rigenerato garantendo che mantenga standard di resistenza atletica.</p>
+                </div>
+                <div class="role-card">
+                    <i class="fa-solid fa-industry"></i>
+                    <div class="role-title">Infrastruttura</div>
+                    <h3>Resp. Sito Industriale</h3>
+                    <p>Coordina la sede operativa, la manutenzione del sito e il confezionamento dei prodotti.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="org-section">
+            <h2 class="org-title">Digital, Sales & Controllo</h2>
+            <div class="org-grid">
+                <div class="role-card">
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <div class="role-title">Communication</div>
+                    <h3>Content & Media Manager</h3>
+                    <p>Cura lo storytelling visivo, documentando il recupero dei rifiuti e l'autenticità della filiera.</p>
+                </div>
+                <div class="role-card">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="role-title">Commerciale</div>
+                    <h3>E-commerce & Sales Manager</h3>
+                    <p>Gestisce i canali di vendita globali e le spedizioni a zero emissioni in tutto il mondo.</p>
+                </div>
+                <div class="role-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <div class="role-title">Finance</div>
+                    <h3>Project Controller</h3>
+                    <p>Monitora i costi, i tempi PERT/CPM e definisce i margini economici per la sostenibilità del business.</p>
+                </div>
+                <div class="role-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="role-title">Qualità</div>
+                    <h3>Resp. Sostenibilità</h3>
+                    <p>Assicura che ogni processo rispetti gli standard ecologici per l'ottenimento delle certificazioni.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 OceanLoop - Il Team. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+    </script>
+</body>
+</html>

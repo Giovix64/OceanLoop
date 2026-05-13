@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanLoop | Moda Rigenerata</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CSS Variables per Dark/Light Mode */
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #11caa0;
+            --primary-hover: #0ea5e9;
+            --secondary: #00334e;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --primary: #2dd4bf;
+            --primary-hover: #38bdf8;
+            --secondary: #1e293b;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: var(--transition);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .logo img {
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-nav {
+            background-color: var(--primary);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        
+        .btn-nav:hover {
+            background-color: var(--primary-hover);
+            color: white !important;
+        }
+
+        /* HAMBURGER MENU ICON */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* --- FLOATING THEME TOGGLE --- */
+        #theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 5%;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-color) 100%);
+            color: #fff;
+            overflow: hidden;
+            margin-top: 60px; /* Offset per la navbar fissa */
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-logo {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            margin: 1.5rem auto;
+            background: transparent;
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin: 1rem auto 2.5rem auto;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 30px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 10px 20px rgba(17, 202, 160, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-main);
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Mission & Storia Text */
+        .text-box {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-left: 5px solid var(--primary);
+        }
+
+        .text-box p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer img {
+            height: 40px;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Media Queries per Mobile */
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px; /* Sotto la navbar */
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* Nascosto di default */
+            }
+
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .btn-nav {
+                display: inline-block;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="OceanLoop Logo"></a>
+        </div>
+        
+        <button class="menu-toggle" id="mobile-menu" aria-label="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+       <ul class="nav-links" id="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#presentazione">La Storia</a></li>
+            <li><a href="attività.html">Le Attività</a></li>
+            <li><a href="shop.html">Shop Prodotti</a></li>
+            <li><a href="organigramma.html" class="btn-nav">Il nostro Team</a></li>
+        </ul>
+    </nav>
+
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <header class="hero" id="home">
+        <video class="hero-video-bg" autoplay muted loop playsinline></video>
+        
+        <div class="hero-content">
+            <h1>Moda <span>Rigenerata</span></h1>
+            
+            <img src="logo.png" alt="OceanLoop Logo" class="hero-logo">
+            
+            <p>Recuperiamo. Trasformiamo. Creiamo. Camminiamo. Dagli oceani alle tue prestazioni sportive, senza compromessi.</p>
+            
+            <a href="#presentazione" class="btn">Scopri il Progetto</a>
+        </div>
+    </header>
+
+    <section id="presentazione">
+        <h2 class="section-title">La Nostra <span>Storia</span></h2>
+        <div class="grid-2">
+            <div class="text-box">
+                <h3>Le Origini della Sfida</h3>
+                <br>
+                <p>L'industria della moda è una delle più inquinanti al mondo. OceanLoop nasce per rispondere a una sfida senza precedenti lanciata da un fondo di investimento green: rivoluzionare il mercato tecnico.</p>
+                <p>La nostra azienda è stata scelta per gestire l'intero ciclo di vita di questa nuova linea. Non ci limitiamo a produrre scarpe, ma costruiamo una filiera produttiva trasparente e tracciabile che trasformi un rifiuto in un oggetto del desiderio.</p>
+            </div>
+            
+            <div style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); background-color: #000;">
+                <video width="100%" controls style="display: block; border-radius: 20px;">
+                    <source src="video_inquinato.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section id="mission" style="background-color: var(--card-bg);">
+        <h2 class="section-title">La Nostra <span>Mission</span></h2>
+        <div class="grid-2" style="direction: rtl;">
+            <div class="text-box" style="direction: ltr;">
+                <h3>Nessun Compromesso</h3>
+                <br>
+                <p>La nostra missione è creare una linea di calzature tecniche ad alte prestazioni partendo esclusivamente dal recupero di plastiche e reti da pesca abbandonate negli oceani.</p>
+                <p>Il mercato attende un prodotto che non scenda a compromessi tra estetica, funzionalità sportiva ed etica ambientale. Ogni nostro passo è certificato ecologico, garantendo l'altissima resistenza del filato tecnico generato dai rifiuti.</p>
+            </div>
+            
+            <div style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); background-color: #000; direction: ltr;">
+                <video width="100%" controls style="display: block; border-radius: 20px;">
+                    <source src="design.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section id="video-gallery">
+        <h2 class="section-title">Il Viaggio <span>Tracciabile</span></h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto; color: var(--text-muted);">
+            Documentiamo ogni singola fase della filiera, dalla raccolta fisica in mare fino al confezionamento in packaging biodegradabile. Scopri i contenuti multimediali che certificano l'autenticità del progetto.
+        </p>
+        
+        <div class="grid-2">
+            <div style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); background-color: #000; position: relative;">
+                <video width="100%" controls style="display: block; border-radius: 20px;">
+                    <source src="raccolta.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
+                <div style="position: absolute; bottom: 50px; left: 20px; z-index: 3; color: white; pointer-events: none; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                    <h3>1. Il Recupero in Mare</h3>
+                </div>
+            </div>
+
+            <div style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); background-color: #000; position: relative;">
+                <video width="100%" controls style="display: block; border-radius: 20px;">
+                    <source src="esercizio.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
+                <div style="position: absolute; bottom: 50px; left: 20px; z-index: 3; color: white; pointer-events: none; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                    <h3>2. La Messa in Esercizio</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="logo.png" alt="OceanLoop Logo">
+        <p>&copy; 2026 OceanLoop - Moda Rigenerata. Tutti i diritti riservati.</p>
+        <div style="margin-top: 1rem; font-size: 1.5rem; display: flex; justify-content: center; gap: 1rem;">
+            <i class="fa-brands fa-instagram" style="cursor: pointer;"></i>
+            <i class="fa-brands fa-linkedin" style="cursor: pointer;"></i>
+            <i class="fa-brands fa-youtube" style="cursor: pointer;"></i>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            htmlElement.setAttribute('data-theme', 'dark');
+            updateIcon('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            if(navMenu.classList.contains('active')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
