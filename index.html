@@ -6,6 +6,7 @@
     <title>OceanLoop | Moda Rigenerata</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         /* CSS Variables per Dark/Light Mode */
         :root {
@@ -63,13 +64,16 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
             cursor: pointer;
             transition: transform 0.3s;
+            border-radius: 50%;
         }
 
         .logo img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
         }
 
         .nav-links {
@@ -151,7 +155,7 @@
             background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-color) 100%);
             color: #fff;
             overflow: hidden;
-            margin-top: 60px; /* Offset per la navbar fissa */
+            margin-top: 60px;
         }
 
         .hero-video-bg {
@@ -184,12 +188,19 @@
         }
 
         .hero-logo {
-            max-width: 250px;
+            max-width: 200px;
             width: 100%;
-            height: auto;
+            height: 200px;
+            object-fit: contain;
             margin: 1.5rem auto;
-            background: transparent;
             display: block;
+            filter: drop-shadow(0 0 20px rgba(17, 202, 160, 0.4));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
         .hero p {
@@ -226,28 +237,25 @@
         }
 
         .section-title {
-            text-align: center;
             font-size: 2.5rem;
+            text-align: center;
             margin-bottom: 3rem;
-            color: var(--text-main);
         }
 
         .section-title span {
             color: var(--primary);
         }
 
-        /* Grid Layouts */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
             align-items: center;
         }
 
-        /* Mission & Storia Text */
         .text-box {
+            padding: 2.5rem;
             background-color: var(--card-bg);
-            padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             transition: var(--transition);
@@ -259,6 +267,341 @@
             font-size: 1.1rem;
         }
 
+        /* ============================
+           MANIFESTO SECTION
+        ============================== */
+        #manifesto {
+            padding: 0;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--secondary) 100%);
+            overflow: hidden;
+        }
+
+        /* --- Banner superiore --- */
+        .manifesto-banner {
+            background: linear-gradient(135deg, #003d5b 0%, #005f7a 50%, #006d6a 100%);
+            padding: 4rem 5% 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2311caa0' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .manifesto-banner-text {
+            z-index: 1;
+        }
+
+        .manifesto-brand {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .manifesto-brand-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+
+        .manifesto-brand h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .manifesto-brand h2 span {
+            color: var(--primary);
+        }
+
+        .manifesto-banner-tagline {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            margin-left: 86px;
+        }
+
+        .manifesto-banner-shoe {
+            z-index: 1;
+            max-width: 350px;
+            width: 40%;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+            transform: rotate(-5deg);
+            animation: shoeFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes shoeFloat {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(-3deg) translateY(-10px); }
+        }
+
+        /* --- Processo 4 step --- */
+        .manifesto-process {
+            background: #f0f9f8;
+            padding: 3rem 5%;
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        [data-theme="dark"] .manifesto-process {
+            background: #0d1f2d;
+        }
+
+        .manifesto-steps {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .manifesto-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem 1.5rem;
+            flex: 1;
+            min-width: 110px;
+        }
+
+        .manifesto-step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .manifesto-step-num {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .manifesto-step-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.2rem;
+        }
+
+        .manifesto-step-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .manifesto-step-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        .manifesto-why {
+            border-left: 2px solid rgba(17, 202, 160, 0.3);
+            padding: 1.5rem 2rem;
+            min-width: 200px;
+        }
+
+        .manifesto-why h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .manifesto-why ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .manifesto-why ul li {
+            font-size: 0.82rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .manifesto-why ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* --- Bottom strip --- */
+        .manifesto-bottom {
+            background: linear-gradient(135deg, #002a3d 0%, #003d5b 100%);
+            padding: 3rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .manifesto-bottom-left {
+            flex: 1;
+        }
+
+        .manifesto-bottom-left h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .manifesto-bottom-left h3 span {
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .manifesto-bottom-left p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 380px;
+            line-height: 1.7;
+        }
+
+        .manifesto-badges {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .manifesto-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            text-align: center;
+        }
+
+        .manifesto-badge-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(17, 202, 160, 0.15);
+            border: 1px solid rgba(17, 202, 160, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .manifesto-badge-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .manifesto-badge-sub {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .manifesto-bottom-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .manifesto-bottom-shoe {
+            max-width: 260px;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+        }
+
+        .manifesto-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .manifesto-cta-btn {
+            background-color: var(--primary);
+            color: #002a3d;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .manifesto-cta-btn:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .manifesto-cta-site {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* QR placeholder */
+        .manifesto-qr {
+            width: 70px;
+            height: 70px;
+            background: #fff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            color: #333;
+            padding: 6px;
+            flex-shrink: 0;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            gap: 1px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-cell {
+            background: #000;
+            border-radius: 1px;
+        }
+
+        .qr-cell.w {
+            background: #fff;
+        }
+
         /* --- FOOTER --- */
         footer {
             background-color: var(--secondary);
@@ -267,10 +610,13 @@
             padding: 3rem 5%;
         }
 
-        footer img {
-            height: 40px;
+        footer .footer-logo {
+            height: 60px;
+            width: 60px;
+            object-fit: contain;
             margin-bottom: 1rem;
-            filter: brightness(0) invert(1);
+            border-radius: 50%;
+            filter: brightness(1.2);
         }
 
         /* Media Queries per Mobile */
@@ -288,7 +634,7 @@
 
             .nav-links {
                 position: absolute;
-                top: 70px; /* Sotto la navbar */
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: var(--nav-bg);
@@ -296,7 +642,7 @@
                 align-items: center;
                 padding: 2rem 0;
                 box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* Nascosto di default */
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
             }
 
             .nav-links.active {
@@ -306,6 +652,67 @@
             .btn-nav {
                 display: inline-block;
                 margin-top: 10px;
+            }
+
+            .manifesto-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .manifesto-banner-tagline {
+                margin-left: 0;
+            }
+
+            .manifesto-brand {
+                justify-content: center;
+            }
+
+            .manifesto-banner-shoe {
+                width: 70%;
+                max-width: 280px;
+            }
+
+            .manifesto-process {
+                flex-direction: column;
+            }
+
+            .manifesto-steps {
+                justify-content: center;
+            }
+
+            .manifesto-why {
+                border-left: none;
+                border-top: 2px solid rgba(17, 202, 160, 0.3);
+                padding: 1.5rem 0 0;
+            }
+
+            .manifesto-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .manifesto-bottom-left p {
+                max-width: 100%;
+            }
+
+            .manifesto-badges {
+                justify-content: center;
+            }
+
+            .manifesto-bottom-right {
+                flex-direction: column;
+            }
+
+            .manifesto-bottom-shoe {
+                max-width: 200px;
+            }
+
+            .manifesto-brand h2 {
+                font-size: 2rem;
+            }
+
+            .manifesto-bottom-left h3 {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -415,8 +822,124 @@
         </div>
     </section>
 
+    <!-- ============================
+         MANIFESTO SECTION
+    ============================== -->
+    <section id="manifesto">
+
+        <!-- Banner superiore: Brand + Scarpa -->
+        <div class="manifesto-banner">
+            <div class="manifesto-banner-text">
+                <div class="manifesto-brand">
+                    <img src="logo.png" alt="OceanLoop Logo" class="manifesto-brand-logo">
+                    <h2>OCEAN<span>LOOP</span></h2>
+                </div>
+                <p class="manifesto-banner-tagline">Dai Rifiuti, Un Nuovo Futuro.</p>
+            </div>
+            <!-- Immagine scarpa: usa un'emoji come placeholder visivo coerente -->
+            <div style="font-size: 8rem; z-index:1; animation: shoeFloat 4s ease-in-out infinite;">👟</div>
+        </div>
+
+        <!-- Processo 4 step + Perché sceglierci -->
+        <div class="manifesto-process">
+            <div class="manifesto-steps">
+                <!-- Step 1 -->
+                <div class="manifesto-step">
+                    <div class="manifesto-step-icon">🌊</div>
+                    <div class="manifesto-step-num">1. Recuperiamo</div>
+                    <div class="manifesto-step-title">La plastica dal mare</div>
+                    <div class="manifesto-step-desc">Raccolta di reti e bottiglie dagli oceani</div>
+                </div>
+                <div class="manifesto-step-arrow">→</div>
+
+                <!-- Step 2 -->
+                <div class="manifesto-step">
+                    <div class="manifesto-step-icon">♻️</div>
+                    <div class="manifesto-step-num">2. Trasformiamo</div>
+                    <div class="manifesto-step-title">In filato sostenibile</div>
+                    <div class="manifesto-step-desc">Processo di riciclo certificato</div>
+                </div>
+                <div class="manifesto-step-arrow">→</div>
+
+                <!-- Step 3 -->
+                <div class="manifesto-step">
+                    <div class="manifesto-step-icon">🧵</div>
+                    <div class="manifesto-step-num">3. Creiamo</div>
+                    <div class="manifesto-step-title">Calzature di qualità</div>
+                    <div class="manifesto-step-desc">Design tecnico ad alte prestazioni</div>
+                </div>
+                <div class="manifesto-step-arrow">→</div>
+
+                <!-- Step 4 -->
+                <div class="manifesto-step">
+                    <div class="manifesto-step-icon">👟</div>
+                    <div class="manifesto-step-num">4. Camminiamo</div>
+                    <div class="manifesto-step-title">Insieme per il pianeta</div>
+                    <div class="manifesto-step-desc">Ogni passo cambia le cose</div>
+                </div>
+            </div>
+
+            <!-- Perché sceglierci -->
+            <div class="manifesto-why">
+                <h4><i class="fa-regular fa-heart"></i> Perché sceglierci?</h4>
+                <ul>
+                    <li>Materiali riciclati</li>
+                    <li>Design e comfort</li>
+                    <li>Produzione responsabile</li>
+                    <li>Impatto positivo</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom: Tagline + Badge + Scarpa + CTA -->
+        <div class="manifesto-bottom">
+            <div class="manifesto-bottom-left">
+                <h3>Ogni passo<br>può <span>cambiare</span> le cose.</h3>
+                <p>Le nostre scarpe nascono dall'oceano e tornano al pianeta per un futuro più pulito, insieme a te.</p>
+
+                <div class="manifesto-badges">
+                    <div class="manifesto-badge">
+                        <div class="manifesto-badge-icon">🌿</div>
+                        <div class="manifesto-badge-title">Eco-Friendly</div>
+                        <div class="manifesto-badge-sub">Sempre</div>
+                    </div>
+                    <div class="manifesto-badge">
+                        <div class="manifesto-badge-icon">♻️</div>
+                        <div class="manifesto-badge-title">Economia</div>
+                        <div class="manifesto-badge-sub">Circolare</div>
+                    </div>
+                    <div class="manifesto-badge">
+                        <div class="manifesto-badge-icon">💨</div>
+                        <div class="manifesto-badge-title">Meno CO₂</div>
+                        <div class="manifesto-badge-sub">Più futuro</div>
+                    </div>
+                    <div class="manifesto-badge">
+                        <div class="manifesto-badge-icon">🤝</div>
+                        <div class="manifesto-badge-title">Trasparenza</div>
+                        <div class="manifesto-badge-sub">e Impegno</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manifesto-bottom-right">
+                <!-- Scarpa placeholder -->
+                <div style="font-size: 9rem; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));">👟</div>
+
+                <div class="manifesto-cta">
+                    <a href="#" class="manifesto-cta-btn">Scopri di Più</a>
+                    <span class="manifesto-cta-site">oceanloop.com</span>
+                    <!-- QR reale cliccabile -->
+                    <a href="https://giovix64.github.io/OceanLoop/index.html" target="_blank" title="Vai al sito OceanLoop" style="display:block; border-radius:6px; overflow:hidden; cursor:pointer;">
+                        <div id="qrcode" class="manifesto-qr" style="padding:0;"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
     <footer>
-        <img src="logo.png" alt="OceanLoop Logo">
+        <img src="logo.png" alt="OceanLoop Logo" class="footer-logo">
         <p>&copy; 2026 OceanLoop - Moda Rigenerata. Tutti i diritti riservati.</p>
         <div style="margin-top: 1rem; font-size: 1.5rem; display: flex; justify-content: center; gap: 1rem;">
             <i class="fa-brands fa-instagram" style="cursor: pointer;"></i>
@@ -458,6 +981,16 @@
                 themeIcon.classList.add('fa-moon');
             }
         }
+
+        // Genera QR Code reale
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://giovix64.github.io/OceanLoop/index.html",
+            width: 70,
+            height: 70,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+        });
 
         // Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobile-menu');
